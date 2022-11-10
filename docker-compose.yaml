@@ -1,0 +1,17 @@
+services:
+  rest01:
+    container_name: rest01
+    ports:
+      - "3005:3005"
+    restart: always
+    build: .
+    volumes:
+      - rest01:/opt/myapps/noderest01
+      - rest01nmodules:/opt/myapps/noderest01/node_modules
+    networks:
+      - node-rest01
+volumes:
+  rest01:
+  rest01nmodules:  
+networks:
+  node-rest01:
