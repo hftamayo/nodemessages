@@ -23,9 +23,8 @@ app.use((req, res, next) => {
 app.use("/feed", feedRoutes);
 
 mongoose
-  .connect("mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/messages")
+  .connect("mongodb+srv://changeme:changeme$@nodecluster.hfnls.mongodb.net/messages")
   .then(result => {
       app.listen(3006);
   })
   .catch(err => console.log(err));
-
