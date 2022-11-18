@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb+srv://changeme:changeme$@nodecluster.hfnls.mongodb.net/messages")
+  .connect("mongodb+srv://user:password$@nodecluster.hfnls.mongodb.net/messages")
   .then((result) => {
     app.listen(3006);
   })
