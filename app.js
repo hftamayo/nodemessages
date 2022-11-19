@@ -1,11 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const path = require("path");
 
 const feedRoutes = require("./routes/feed");
 
 const app = express();
+
+dotenv.config();
+const GATEWAY = process.env.MONGODB_NODEMESSAGE;
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -31,7 +35,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb+srv://user:password1$@nodecluster.hfnls.mongodb.net/messages")
+  .connect(GATEWAY)
   .then((result) => {
     app.listen(3006);
   })
