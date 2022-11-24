@@ -3,10 +3,20 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
+const multer = require("multer");
 
 const feedRoutes = require("./routes/feed");
 
 const app = express();
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + '-' + file.originalname);
+  } 
+});
 
 dotenv.config();
 const GATEWAY = process.env.MONGODB_NODEMESSAGE;
