@@ -11,17 +11,34 @@ const app = express();
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'images');
+    cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + '-' + file.originalname);
-  } 
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
 });
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    //valid file
+    cb(null, true);
+  } else {
+    //invalid file
+    cb(null, false);
+  }
+};
 
 dotenv.config();
 const GATEWAY = process.env.MONGODB_NODEMESSAGE;
 
 app.use(bodyParser.json());
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //CORS handler
