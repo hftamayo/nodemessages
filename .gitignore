@@ -2,3 +2,4 @@ node_modules/
 .dccache
 package-lock.json
 .env
+images/
