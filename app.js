@@ -57,7 +57,7 @@ app.use(
       }
     },
     allowedHeaders: ["authorization", "Content-Type"],
-    exposedHeaders: ["authorizartion"],
+    exposedHeaders: ["authorization"],
     methods: "GET,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
   }),
