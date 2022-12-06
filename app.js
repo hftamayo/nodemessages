@@ -10,8 +10,6 @@ const feedRoutes = require("./routes/feed");
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000',
-                         'http://127.0.0.1:3000'];
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,8 +43,15 @@ app.use(
 );
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-//CORS handler
-app.use(
+//CORS handler using Express
+
+const allowedOrigins = {
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+}
+
+app.use(cors(allowedOrigins));
+
+/* app.use(
   cors({
     origin: function(origin, callback){
       //allow requests with no origin like mobile apps or curl requests)
@@ -61,11 +66,11 @@ app.use(
     methods: "GET,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
   }),
-);
+); */
 
-//app.use((req, res, next) => {
-  //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9090', 'http://localhost:3000');
-/*   res.setHeader("Access-Control-Allow-Origin", "*");
+/* app.use((req, res, next) => {
+  //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://127.0.0.1:3000');
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
