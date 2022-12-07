@@ -79,7 +79,7 @@ app.use(cors(allowedOrigins));
   next();
 }); */
 
-app.use("/feed", feedRoutes);
+app.use("/feed", cors(), feedRoutes);
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
