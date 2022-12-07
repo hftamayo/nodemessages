@@ -83,8 +83,8 @@ exports.updatePost = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  const title = req.params.title;
-  const content = req.params.content;
+  const title = req.body.title;
+  const content = req.body.content;
   let imageUrl = req.body.image;
   if (req.file) {
     imageUrl = req.file.path;
