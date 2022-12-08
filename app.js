@@ -10,7 +10,6 @@ const feedRoutes = require("./routes/feed");
 
 const app = express();
 
-
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -46,8 +45,13 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 //CORS handler using Express
 
 const allowedOrigins = {
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-}
+  origin: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:9090",
+    "http://127.0.0.1:9090",
+  ],
+};
 
 app.use(cors(allowedOrigins));
 
