@@ -66,7 +66,7 @@ paths:
         "500":
           description: "no descriptive error thrown"
   /feed/post/{postId}:
-    get:
+    delete:
       tags:
       - "get post"
       summary: "display a post found by id"
@@ -83,12 +83,12 @@ paths:
 
       responses:
         "200":
-          description: "Post fetched"
+          description: "Post fetched | deleted post"
         "404":
           description: "Could not find post"
         "500":
           description: "no descriptive error thrown"          
-      
+
 definitions:
   Post:
     type: "object"
