@@ -88,6 +88,36 @@ paths:
           description: "Could not find post"
         "500":
           description: "no descriptive error thrown"          
+  /feed/post/{postId}:
+    put:
+      tags:
+      - "update a post"
+      summary: "update a post found by id"
+      description: "update a post found by id, try these one: 63766f7ac91610c4f5a76c23"
+      operationId: "put"
+      produces:
+      - "application/json"
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          description: post to find
+          type: string
+
+      responses:
+        "200":
+          description: "Post fetched | deleted post"
+          content:
+             application/json:
+                schema:
+                   type: array
+                   items:
+                      $ref: 
+                   
+        "404":
+          description: "Could not find post"
+        "500":
+          description: "no descriptive error thrown"
 
 definitions:
   Post:
