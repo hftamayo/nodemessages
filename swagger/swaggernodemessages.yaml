@@ -103,16 +103,21 @@ paths:
           required: true
           description: post to find
           type: string
-
+      requestBody:
+         required: true
+         content:
+            application/json:
+               schema:
+                  $ref: '#components/schemas/Book'
       responses:
         "200":
-          description: "Post fetched | deleted post"
+          description: "Post updated sucessfully"
           content:
              application/json:
                 schema:
                    type: array
                    items:
-                      $ref: 
+                      $ref: '#components/schemas/Book'
                    
         "404":
           description: "Could not find post"
