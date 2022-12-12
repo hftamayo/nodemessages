@@ -66,12 +66,32 @@ paths:
         "500":
           description: "no descriptive error thrown"
   /feed/post/{postId}:
+    get:
+      tags:
+        - feed/post
+      summary: Find a post by ID
+      operationId: getPostById
+      produces:
+      - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: ID of post to return
+          type: string
+      responses:
+        '200':
+          description: "post fetched"
+        '404':
+          description: "could not find post"
+        '500':
+          description: "no descriptive error thrown"
     delete:
       tags:
-      - "get post"
-      summary: "display a post found by id"
-      description: "display a post found by id, try these ones: 63766f7ac91610c4f5a76c23 | 637fc0c84585f13ec43d53af"
-      operationId: "get"
+      - feed/post
+      summary: "delete a post found by id"
+      description: "delete a post found by id, try these ones: 63766f7ac91610c4f5a76c23 | 637fc0c84585f13ec43d53af"
+      operationId: deletePost
       produces:
       - "application/json"
       parameters:
@@ -83,12 +103,11 @@ paths:
 
       responses:
         "200":
-          description: "Post fetched | deleted post"
+          description: "Post deleted"
         "404":
           description: "Could not find post"
         "500":
           description: "no descriptive error thrown"          
-  /feed/post/{postId}:
     put:
       tags:
       - "update a post"
@@ -124,211 +143,31 @@ paths:
         "500":
           description: "no descriptive error thrown"
 
-definitions:
-  Post:
-    type: "object"
-    required:
-    - "title"
-    - "content"
-    properties:
-      id:
-        type: "integer"
-        format: "mm/dd/yy hh:mm:ss"
-      title:
-        type: "string"
-        example: "rest api with go"
-      imageUrl:
-        type: "string"
-        example: "images/piquina.png"
-      content:
-        type: "string"
-        example: "this is a great book"
-
-
-        ********************************************
-        paths:
-  /pet:
-    put:
-      tags:
-        - pet
-      summary: Update an existing pet
-      description: Update an existing pet by Id
-      operationId: updatePet
-      requestBody:
-        description: Update an existent pet in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-        '405':
-          description: Validation exception
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-    post:
-      tags:
-        - pet
-      summary: Add a new pet to the store
-      description: Add a new pet to the store
-      operationId: addPet
-      requestBody:
-        description: Create a new pet in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '405':
-          description: Invalid input
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /pet/{petId}:
-    get:
-      tags:
-        - pet
-      summary: Find pet by ID
-      description: Returns a single pet
-      operationId: getPetById
-      parameters:
-        - name: petId
-          in: path
-          description: ID of pet to return
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-      security:
-        - api_key: []
-        - petstore_auth:
-            - write:pets
-            - read:pets
-    delete:
-      tags:
-        - pet
-      summary: Deletes a pet
-      description: delete a pet
-      operationId: deletePet
-      parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
-        - name: petId
-          in: path
-          description: Pet id to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '400':
-          description: Invalid pet value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-            
 components:
   schemas:
-    Pet:
+    Post:
       required:
-        - name
-        - photoUrls
-      type: object
+      - "title"
+      - "content"
       properties:
         id:
-          type: integer
-          format: int64
-          example: 10
-        name:
-          type: string
-          example: doggie
+          type: "string"
+          example: "ebc1233"
+        title:
+          type: "string"
+          example: "rest api with go"
+        imageUrl:
+          type: "string"
+          example: "images/piquina.png"
+        content:
+          type: "string"
+          example: "this is a great book"
       xml:
-        name: pet
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
+        name: post
   requestBodies:
-    Pet:
-      description: Pet object that needs to be added to the store
+    Post:
+      description: Post object that needs to be added
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Pet'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Pet'
-    UserArray:
-      description: List of user object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-  
+          $ref: '#/components/schemas/Post'
