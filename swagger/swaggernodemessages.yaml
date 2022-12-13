@@ -110,7 +110,7 @@ paths:
           description: "no descriptive error thrown"          
     put:
       tags:
-      - "update a post"
+      - feed/post
       summary: "update a post found by id"
       description: "update a post found by id, try these one: 63766f7ac91610c4f5a76c23"
       operationId: "put"
@@ -127,7 +127,7 @@ paths:
          content:
             application/json:
                schema:
-                  $ref: '#components/schemas/Book'
+                  $ref: '#components/schemas/Post'
       responses:
         "200":
           description: "Post updated sucessfully"
@@ -136,7 +136,7 @@ paths:
                 schema:
                    type: array
                    items:
-                      $ref: '#components/schemas/Book'
+                      $ref: '#components/schemas/Post'
                    
         "404":
           description: "Could not find post"
@@ -148,6 +148,7 @@ components:
     Post:
       required:
       - "title"
+      - "imageUrl"
       - "content"
       properties:
         id:
@@ -171,3 +172,11 @@ components:
         application/json:
           schema:
           $ref: '#/components/schemas/Post'
+    PostArray:
+      description: List of post objects
+      content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
