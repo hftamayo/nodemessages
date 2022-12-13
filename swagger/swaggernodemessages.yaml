@@ -113,9 +113,7 @@ paths:
       - feed/post
       summary: "update a post found by id"
       description: "update a post found by id, try these one: 63766f7ac91610c4f5a76c23"
-      operationId: "put"
-      produces:
-      - "application/json"
+      operationId: updatePost
       parameters:
         - in: path
           name: postId
@@ -123,26 +121,19 @@ paths:
           description: post to find
           type: string
       requestBody:
-         required: true
          content:
             application/json:
-               schema:
-                  $ref: '#components/schemas/Post'
+              schema:
+                $ref: '#/components/schemas/Post'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Post'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Post'
       responses:
-        "200":
-          description: "Post updated sucessfully"
-          content:
-             application/json:
-                schema:
-                   type: array
-                   items:
-                      $ref: '#components/schemas/Post'
-                   
-        "404":
-          description: "Could not find post"
-        "500":
-          description: "no descriptive error thrown"
-
+        default:
+          description: successful operation
 components:
   schemas:
     Post:
@@ -180,3 +171,4 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
+          
