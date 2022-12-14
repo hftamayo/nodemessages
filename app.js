@@ -7,6 +7,7 @@ const multer = require("multer");
 const cors = require("cors");
 
 const feedRoutes = require("./routes/feed");
+const authRoutes = require("./routes/feed");
 
 const app = express();
 
@@ -88,6 +89,8 @@ app.use(cors(allowedOrigins, corsOptions));
 }); */
 
 app.use("/feed", cors(), feedRoutes);
+app.use("/auth", cors(), authRoutes);
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
