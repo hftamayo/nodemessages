@@ -53,7 +53,11 @@ const allowedOrigins = {
   ],
 };
 
-app.use(cors(allowedOrigins));
+const corsOptions = {
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(allowedOrigins, corsOptions));
 
 /* app.use(
   cors({
