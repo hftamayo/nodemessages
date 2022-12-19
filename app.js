@@ -7,7 +7,7 @@ const multer = require("multer");
 const cors = require("cors");
 
 const feedRoutes = require("./routes/feed");
-const authRoutes = require("./routes/feed");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
