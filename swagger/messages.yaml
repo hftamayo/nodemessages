@@ -296,89 +296,84 @@ paths:
         - petstore_auth:
             - write:pets
             - read:pets
-  /feed/inventory:
+  /feed/posts:
     get:
       tags:
         - feed
-      summary: Returns pet inventories by status
-      description: Returns a map of status codes to quantities
-      operationId: getInventory
+      summary: Returns feed of posts
+      description: Returns all postmessages available
+      operationId: getPosts
       responses:
         '200':
-          description: successful operation
+          description: fetched posts sucessfully
           content:
             application/json:
               schema:
                 type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-  /feed/order:
+  /feed/post:
     post:
       tags:
         - feed
-      summary: Place an order for a pet
-      description: Place a new order in the store
-      operationId: placeOrder
+      summary: save a new post message
+      description: store in database a post message
+      operationId: post
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Post'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Post'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Post'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Post'
         '405':
           description: Invalid input
-  /feed/order/{orderId}:
+  /feed/post/{postId}:
     get:
       tags:
         - feed
-      summary: Find purchase order by ID
-      description: For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
-      operationId: getOrderById
+      summary: Find a post message by its ID
+      description: find a display a post by its ID.
+      operationId: getPostById
       parameters:
-        - name: orderId
+        - name: postId
           in: path
-          description: ID of order that needs to be fetched
+          description: ID of a post that needs to be fetched
           required: true
           schema:
             type: integer
             format: int64
       responses:
         '200':
-          description: successful operation
+          description: fetched post successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'          
+                $ref: '#/components/schemas/Post'          
             application/xml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Post'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Order not found
+        '500':
+          description: No descriptive error thrown
     delete:
       tags:
         - feed
-      summary: Delete purchase order by ID
-      description: For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
-      operationId: deleteOrder
+      summary: Delete post message by its ID
+      description: find a delete a post by its ID
+      operationId: deletePost
       parameters:
-        - name: orderId
+        - name: postId
           in: path
           description: ID of the order that needs to be deleted
           required: true
@@ -575,6 +570,23 @@ paths:
           description: User not found
 components:
   schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ebc1233
+        title:
+          type: string
+          example: rest api with go
+        imageUrl:
+          type: string
+          example: images/piquina.png
+        content:
+          type: string
+          example: this is a great book
+      xml:
+        name: post  
     Order:
       type: object
       properties:
