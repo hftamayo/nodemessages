@@ -1,5 +1,5 @@
 const express = require('express');
-const { body } = require("express-validator");
+const { check } = require("express-validator");
 
 const User = require("../models/user");
 const authController = require("../controllers/auth");
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post(
   "/signup",
   [
-    body("email")
+    check("email")
       .isEmail()
       .withMessage("Please enter a valid email")
       .custom((custom, { req }) => {
@@ -20,8 +20,8 @@ router.post(
         });
       })
       .normalizeEmail(),
-    body("password").trim().isLength({ min: 5 }),
-    body("name").trim().not().isEmpty(),
+    check("password").trim().isLength({ min: 5 }),
+    check("name").trim().not().isEmpty(),
   ],
   authController.signup
 );
