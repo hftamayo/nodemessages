@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const { check } = require("express-validator");
 
 const User = require("../models/user");
@@ -10,6 +10,8 @@ router.post(
   "/signup",
   [
     check("email")
+      .exists().
+      withMessage("email value does not exists or it is blank")
       .isEmail()
       .withMessage("Please enter a valid email")
       .custom((custom, { req }) => {
