@@ -1,5 +1,5 @@
 const express = require("express");
-const { check } = require("express-validator");
+const { body, check } = require("express-validator");
 
 const User = require("../models/user");
 const authController = require("../controllers/auth");
@@ -15,7 +15,8 @@ router.post(
       .isEmail()
       .withMessage("Please enter a valid email")
       .custom((custom, { req }) => {
-        return User.findOne({ email: value }).then((userDoc) => {
+        let inputEmail = body('email');
+        return User.findOne({ email: inputEmail }).then((userDoc) => {
           if (userDoc) {
             return Promise.reject("Email address already exists");
           }
