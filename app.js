@@ -55,6 +55,7 @@ const allowedOrigins = {
 };
 
 const corsOptions = {
+  //Authorization es indispensables para operaciones con el JWT activo
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
