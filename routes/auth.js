@@ -11,12 +11,12 @@ router.post(
   "/signup",
   [
     check("email")
-      .exists().
-      withMessage("email value does not exists or it is blank")
+      .exists()
+      .withMessage("email value does not exists or it is blank")
       .isEmail()
       .withMessage("Please enter a valid email")
       .custom((custom, { req }) => {
-        let inputEmail = body('email');
+        let inputEmail = body("email");
         return User.findOne({ email: inputEmail }).then((userDoc) => {
           if (userDoc) {
             return Promise.reject("Email address already exists");
@@ -30,9 +30,13 @@ router.post(
   authController.signup
 );
 
-router.post('/login', authController.login);
-router.get('/status', isAuth, authController.getUserStatus);
-router.patch('/status', isAuth);
-
+router.post("/login", authController.login);
+router.get("/status", isAuth, authController.getUserStatus);
+router.patch(
+  "/status",
+  isAuth,
+  [body("status").trim().not().isEmpty()],
+  authController.updateUserStatus
+);
 
 module.exports = router;
