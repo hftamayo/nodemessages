@@ -103,6 +103,10 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(GATEWAY)
   .then((result) => {
-    app.listen(3006);
+    const server = app.listen(3006);
+    const io = require('socket.io')(server);
+    io.on('connection', socket => {
+      console.log('Client connected');
+    })
   })
   .catch((err) => console.log(err));
